@@ -125,9 +125,12 @@ if (argv.browser) {
   server.post('/', function(req, res) {
     var conf = require('./conf/' + req.body.conf)(App);
     App.scrape(conf, function(opts, result) {
+      var fields = conf.fields ? conf.fields : (typeof result.length == 'undefined' ? Object.keys(result) : Object.keys(result[0]));
+
       res.render('index', {
         conf: req.body.conf,
         results: result,
+        title_key: fields[0],
         directories: glob.sync('./conf/*/**.js').map(function(val) { return val.replace('./conf/', '').replace('.js', ''); })
       });
     });

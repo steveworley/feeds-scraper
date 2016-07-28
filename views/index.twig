@@ -43,7 +43,7 @@
     <div class="container">
       <h4>There are {{ results.length }} results!</h4>
       {% for idx, result in results %}
-        <h3><a href="#panel-{{ idx }}" data-toggle="collapse" class="collapsed" aria-expanded="false" arial-controls="panel-{{ idx }}">{{ result.title }}<span class="pull-right"><i class="fa fa-chevron-down"></i><i class="fa fa-chevron-up"></i></span></a></h3>
+        <h3><a href="#panel-{{ idx }}" data-toggle="collapse" class="collapsed" aria-expanded="false" arial-controls="panel-{{ idx }}">{{ result[title_key] }}<span class="pull-right"><i class="fa fa-chevron-down"></i><i class="fa fa-chevron-up"></i></span></a></h3>
         <div class="collapse item" id="panel-{{ idx }}">
           {% for key, value in result %}
             <div class="item-row">
