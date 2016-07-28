@@ -1,0 +1,81 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link rel="stylesheet" href="/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="/quill.base.css" type="text/css" />
+  <link rel="stylesheet" href="/quill.snow.css" type="text/css" />
+  <link rel="stylesheet" href="/style.css" type="text/css" />
+
+  <script type="text/javascript" src="/jquery-3.1.0.min.js"></script>
+  <script type="text/javascript" src="/bootstrap.js"></script>
+  <script type="text/javascript" src="/quill.min.js"></script>
+  <script type="text/javascript" src="/script.js"></script>
+
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Feeds CSV Generator</h1>
+    </div>
+    <p class="lead">Using defined configuration, preview the scraped content before exporting to CSV.</p>
+    <p>Available configuration:</p>
+    <form action="/" method="POST">
+      <div class="form-group">
+        <select name="conf" class="form-control">
+          {% for dir in directories %}
+            <option value="{{ dir }}">{{ dir }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <p class="text-right"><input type="submit" class="btn btn-warning" value="Fetch" /></p>
+    </form>
+  </div>
+
+  {% if results %}
+
+    <div class="container">
+      <h4>There are {{ results.length }} results!</h4>
+      {% for idx, result in results %}
+        <h3><a href="#panel-{{ idx }}" data-toggle="collapse" class="collapsed" aria-expanded="false" arial-controls="panel-{{ idx }}">{{ result.title }}<span class="pull-right"><i class="fa fa-chevron-down"></i><i class="fa fa-chevron-up"></i></span></a></h3>
+        <div class="collapse item" id="panel-{{ idx }}">
+          {% for key, value in result %}
+            <div class="item-row">
+              <p class="lead">{{ key }}</p>
+              {% if key == 'body' %}
+                <div class="quill-wrapper">
+                  <div id="toolbar-{{ key }}-{{ idx }}" class="toolbar">
+                    <span class="ql-format-group">
+                      <span title="Bold" class="ql-format-button ql-bold"></span><span class="ql-format-separator"></span><span title="Italic" class="ql-format-button ql-italic"></span><span class="ql-format-separator"></span><span title="Underline" class="ql-format-button ql-underline"></span><span class="ql-format-separator"></span><span title="Strikethrough" class="ql-format-button ql-strike"></span>
+                    </span>
+                    <span class="ql-format-group">
+                      <span title="List" class="ql-format-button ql-list"></span><span class="ql-format-separator"></span><span title="Bullet" class="ql-format-button ql-bullet"></span><span class="ql-format-separator"></span><span title="Text Alignment" class="ql-align ql-picker"><span class="ql-picker-label" data-value="left"></span><span class="ql-picker-options"><span data-value="left" class="ql-picker-item ql-selected"></span><span data-value="center" class="ql-picker-item"></span><span data-value="right" class="ql-picker-item"></span><span data-value="justify" class="ql-picker-item"></span></span></span><select title="Text Alignment" class="ql-align" style="display: none;"><option value="left" label="Left" selected=""></option><option value="center" label="Center"></option><option value="right" label="Right"></option><option value="justify" label="Justify"></option></select>
+                    </span>
+                  </div>
+                  <div id="{{ key }}-{{ idx }}" class="{{ key }} value">{{ value }}</div>
+                </div>
+              {% else %}
+                <div id="{{ key }}-{{ idx }}" class="{{ key }} value">{{ value }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <h4 class="text-muted text-center"><a href="#">Download the results as a CSV</a></h4>
+        <form name="download" method="POST" action="/download"><input type="hidden" name="data" value ="" /><input type="hidden" name="conf" value="{{ conf }}"/></form>
+      </div>
+    </footer>
+
+  {% endif %}
+</body>
+</html>
