@@ -9,7 +9,7 @@ body {
   margin-bottom: 60px;
 }
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
@@ -43,4 +43,24 @@ body {
 
 .item .value.body {
   max-height: 200px;
+}
+
+h3 a {
+  display: block;
+}
+
+h3 a:not(.collapsed) .fa-chevron-down {
+  display: inline-block;
+}
+
+h3 a.collapsed .fa-chevron-down {
+  display: none;
+}
+
+h3 a:not(.collapsed) .fa-chevron-up {
+  display: none;
+}
+
+h3 a.collapsed .fa-chevron-up {
+  display: inline-block;
 }

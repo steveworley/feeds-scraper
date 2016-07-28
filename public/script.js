@@ -2,7 +2,7 @@
  * @file
  *
  */
-(function($, Quill, Data) {
+(function($, Quill) {
 
   'use strict';
 
@@ -14,9 +14,12 @@
       let $toolbar = $this.find('.toolbar');
 
       if (!$editor.prop('id')) {
+        // Make sure we can find the ID attribute of the DIV.
         return;
       }
 
+      // Build an instance of the Quill editor and assign to data so we can
+      // access the instance later.
       $editor.data('editor', new Quill('#' + $editor.prop('id'), {theme: 'snow'}));
 
       if ($toolbar.prop('id')) {
@@ -33,11 +36,9 @@
           let $title = $(this).find('.lead');
           let $value = $(this).find('.value');
 
-          if ($value.data('editor').getModule('toolbar')) {
-            item[$title.text()] = $value.data('editor').getHTML().replace(/(<div>)/g, '<p>').replace(/(<\/div>)/g, '</p>')
-          } else {
-            item[$title.text()] = $value.data('editor').getText().trim();
-          }
+          item[$title.text()] = $value.data('editor').getModule('toolbar')
+            ? $value.data('editor').getHTML().replace(/(<div>)/g, '<p>').replace(/(<\/div>)/g, '</p>')
+            : $value.data('editor').getText().trim();
         });
         data.push(item);
       });
@@ -47,4 +48,4 @@
 
   });
 
-})(jQuery, Quill, Data);
+})(jQuery, Quill);

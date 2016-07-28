@@ -141,7 +141,7 @@ if (argv.browser) {
   --*/
   server.post('/download', function(req, res) {
     var data = JSON.parse(req.body.data);
-    var conf = require('./conf/test')(App);
+    var conf = require('./conf/' + req.body.conf)(App);
     var fields = conf.fields ? conf.fields : (typeof data.length == 'undefined' ? Object.keys(data) : Object.keys(data[0]));
 
     json2csv({data: data, fields: fields}, function(err, csv) {
