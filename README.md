@@ -44,8 +44,6 @@ node index.js --browser
 
 Navigate to [http://localhost:3333](http://localhost:3333)
 
-![Browser based editing](/screenshot.png)
-
 The browser based version will allow you to edit fields prior to generating the CSV and it comes bundled with [QuillJS](http://quilljs.com) to enable rich text editing. All fields will be editable however only fields named **body** will be presented with the toolbar.
 
 _Note: Some configurations may produce CSVs too large for the browser and CLI will have to be used._
