@@ -29,7 +29,6 @@
     <form action="/" method="POST">
       <div class="form-group">
         <select name="conf" class="form-control">
-          <option value="test">Test</option>
           {% for dir in directories %}
             <option value="{{ dir }}">{{ dir }}</option>
           {% endfor %}
